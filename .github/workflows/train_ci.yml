@@ -27,9 +27,9 @@ jobs:
 
     - name: Run MLflow Project Retraining
       run: |
-      export DAGSHUB_TOKEN=${{ secrets.DAGSHUB_TOKEN }}
-        mlflow run MLProject_Folder --experiment-name "Eksperimen_Diabetes_Titi" --env-manager conda
-      
+        export DAGSHUB_TOKEN=${{ secrets.DAGSHUB_TOKEN }}
+        mlflow run MLProject_Folder --experiment-name "Eksperimen_Diabetes_Titi" --env-manager local
+
   docker-build-push:
     needs: mlflow-retraining
     runs-on: ubuntu-latest
