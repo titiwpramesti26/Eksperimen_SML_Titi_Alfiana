@@ -19,8 +19,11 @@ token = os.environ.get("DAGSHUB_TOKEN")
 
 # Inisialisasi Koneksi DagsHub & MLflow Online
 # Token akan otomatis dibaca oleh sistem dagshub dari Environment Variable DAGSHUB_TOKEN
-dagshub.init(repo_owner=USERNAME, repo_name=REPO_NAME, mlflow=True)
-mlflow.set_tracking_uri(f"https://dagshub.com/{USERNAME}/{REPO_NAME}.mlflow")
+if token:
+    dagshub.init(repo_owner=USERNAME, repo_name=REPO_NAME, mlflow=True)
+    mlflow.set_tracking_uri(f"https://dagshub.com/{USERNAME}/{REPO_NAME}.mlflow")
+else:
+    print("DAGSHUB_TOKEN tidak tersedia, menggunakan MLflow lokal.")
 mlflow.set_experiment("Eksperimen_Diabetes_Titi")
 
 # 2. Membaca Data Bersih secara Fleksibel (Mendukung Otomatisasi GitHub Actions)
