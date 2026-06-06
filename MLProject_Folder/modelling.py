@@ -14,7 +14,10 @@ import seaborn as sns
 USERNAME = "titiwpramesti26"
 REPO_NAME = "Eksperimen_SML_Titi_Alfiana"
 
-dagshub.init(repo_owner=USERNAME, repo_name=REPO_NAME, mlflow=True)
+# Membaca token otomatis dari GitHub Actions jika tersedia
+token = os.environ.get("DAGSHUB_TOKEN")
+
+dagshub.init(repo_owner=USERNAME, repo_name=REPO_NAME, mlflow=True, token=token)
 mlflow.set_tracking_uri(f"https://dagshub.com/{USERNAME}/{REPO_NAME}.mlflow")
 mlflow.set_experiment("Eksperimen_Diabetes_Titi")
 
