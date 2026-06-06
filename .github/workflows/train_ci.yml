@@ -27,10 +27,9 @@ jobs:
 
     - name: Run MLflow Project Retraining
       env:
-        # Menyambungkan token akses rahasia DagsHub agar robot diizinkan masuk
         DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
       run: |
-      mlflow run MLProject_Folder --experiment-name "Eksperimen_Diabetes_Titi" --env-manager local
+        mlflow run MLProject_Folder --experiment-name "Eksperimen_Diabetes_Titi" --env-manager local
 
   docker-build-push:
     needs: mlflow-retraining
@@ -47,7 +46,6 @@ jobs:
 
     - name: Build and Push Docker Image
       run: |
-        # Membakar model menjadi Docker Image dan melemparnya ke Docker Hub Titi
         docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/diabetes-prediction-model:latest -f - . <<EOF
         FROM python:3.10-slim
         RUN pip install mlflow dagshub scikit-learn pandas numpy matplotlib seaborn
