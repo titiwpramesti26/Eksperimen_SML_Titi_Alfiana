@@ -84,21 +84,21 @@ with mlflow.start_run(run_name="Automated_CI_Retraining"):
     image_path = "confusion_matrix_ci.png"
     plt.savefig(image_path, bbox_inches='tight')
     plt.close()
-    
+
     mlflow.log_artifact(image_path)
     if os.path.exists(image_path):
         os.remove(image_path)
-        
+
     # MEMBUAT ARTEFAK TAMBAHAN 2: Teks Laporan Klasifikasi (.txt)
     report_text = classification_report(y_test, y_pred, target_names=['Sehat', 'Diabetes'])
     report_path = "classification_report_ci.txt"
     with open(report_path, "w") as f:
         f.write(report_text)
-        
+
     mlflow.log_artifact(report_path)
     if os.path.exists(report_path):
         os.remove(report_path)
-        
+
     # Menyimpan Artefak Model Utama ke Server Online MLflow
     mlflow.sklearn.log_model(model, "model_automated_ci")
     

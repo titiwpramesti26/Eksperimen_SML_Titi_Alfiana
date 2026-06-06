@@ -26,11 +26,10 @@ jobs:
         pip install mlflow dagshub scikit-learn pandas numpy matplotlib seaborn
 
     - name: Run MLflow Project Retraining
-      env:
-        DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
       run: |
-        mlflow run MLProject_Folder --experiment-name "Eksperimen_Diabetes_Titi" --env-manager local
-
+      export DAGSHUB_TOKEN=${{ secrets.DAGSHUB_TOKEN }}
+        mlflow run MLProject_Folder --experiment-name "Eksperimen_Diabetes_Titi" --env-manager conda
+      
   docker-build-push:
     needs: mlflow-retraining
     runs-on: ubuntu-latest
