@@ -30,8 +30,7 @@ jobs:
         # Menyambungkan token akses rahasia DagsHub agar robot diizinkan masuk
         DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
       run: |
-        cd MLProject_Folder
-        python modelling.py
+      mlflow run MLProject_Folder --experiment-name "Eksperimen_Diabetes_Titi" --env-manager local
 
   docker-build-push:
     needs: mlflow-retraining
