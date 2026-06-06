@@ -4,7 +4,7 @@ from sklearn.preprocessing import StandardScaler
 import os
 import sys
 
-# 1. INI ADALAH MESINNYA (FUNGSI UTAMA)
+
 def run_preprocessing(input_path, output_dir):
     print(f"Memulai otomatisasi preprocessing untuk: {input_path}")
     
@@ -46,11 +46,9 @@ def run_preprocessing(input_path, output_dir):
     print(f"Pre-processing Selesai! File disimpan di: {output_file}")
 
 
-# 2. INI ADALAH TOMBOL START-NYA (YANG SUDAH DISESUAIKAN NAMA FOLDERNYA)
 if __name__ == "__main__":
-    # Di sini kita pakai folder "diabetes_raw" dan "diabetes_preprocessing" yang sudah kita sepakati
     INPUT = "diabetes_raw/diabetes.csv"
     OUTPUT_DIR = "preprocessing/diabetes_preprocessing"
     
-    # Menjalankan mesin dengan input dan output di atas
+    # Menjalankan mesin preprocessing otomatis
     run_preprocessing(INPUT, OUTPUT_DIR)

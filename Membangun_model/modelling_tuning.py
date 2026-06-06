@@ -96,7 +96,7 @@ for params in grid_parameters:
         if os.path.exists(report_name):
             os.remove(report_name)
             
-        # Simpan Model ke MLflow
+        # menyimpan Model ke MLflow
         mlflow.sklearn.log_model(model, f"model_{params['run_name']}")
         
         print(f"-> {params['run_name']} Sukses! Akurasi: {acc * 100:.2f}%")

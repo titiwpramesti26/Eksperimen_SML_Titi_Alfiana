@@ -84,7 +84,7 @@ with mlflow.start_run(run_name="Baseline_Model_RF"):
     # Kirim file teks laporan ke server online MLflow DagsHub
     mlflow.log_artifact(report_path)
     if os.path.exists(report_path):
-        os.remove(report_path) # Hapus file lokal setelah dikirim
+        os.remove(report_path)
         
     # Menyimpan Model Utama (.pkl) ke dalam MLflow Artifacts
     mlflow.sklearn.log_model(model, "model_baseline_rf")

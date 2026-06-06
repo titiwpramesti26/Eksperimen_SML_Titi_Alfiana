@@ -69,6 +69,9 @@ with mlflow.start_run(run_name="Automated_CI_Retraining"):
     prec = precision_score(y_test, y_pred)
     rec = recall_score(y_test, y_pred)
     f1 = f1_score(y_test, y_pred)
+
+    # Menyimpan model Random Forest ke dalam folder "model" di DagsHub
+    mlflow.sklearn.log_model(model, "model")
     
     # MANUAL LOGGING PARAMETERS
     mlflow.log_param("n_estimators", n_estimators)
