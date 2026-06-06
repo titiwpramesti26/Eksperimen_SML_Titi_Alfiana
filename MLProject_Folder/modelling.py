@@ -14,13 +14,19 @@ import seaborn as sns
 USERNAME = "titiwpramesti26"
 REPO_NAME = "Eksperimen_SML_Titi_Alfiana"
 
-# Membaca token otomatis dari GitHub Actions jika tersedia
+# Mengambil token rahasia dari sistem (Environment Variable)
 token = os.environ.get("DAGSHUB_TOKEN")
 
-# Inisialisasi Koneksi DagsHub & MLflow Online
-# Token akan otomatis dibaca oleh sistem dagshub dari Environment Variable DAGSHUB_TOKEN
-dagshub.init(repo_owner=USERNAME, repo_name=REPO_NAME, mlflow=True)
-mlflow.set_tracking_uri(f"https://dagshub.com/{USERNAME}/{REPO_NAME}.mlflow")
+if token:
+    # Jika token ditemukan (saat dijalankan oleh Robot GitHub Actions), kunci otomatis dibuka
+    dagshub.init(repo_owner=USERNAME, repo_name=REPO_NAME, mlflow=True)
+    mlflow.set_tracking_uri(f"https://dagshub.com/{USERNAME}/{REPO_NAME}.mlflow")
+    print("✓ Berhasil terhubung ke DagsHub Online menggunakan token sistem.")
+else:
+    # Jika token tidak ada (saat Titi uji coba lokal di laptop), beralih ke local tracking agar tidak error
+    mlflow.set_tracking_uri("http://localhost:5000") # atau biarkan kosong untuk local directory
+    print("⚠ DAGSHUB_TOKEN tidak terdeteksi, merekam eksperimen di MLflow Lokal.")
+
 mlflow.set_experiment("Eksperimen_Diabetes_Titi")
 
 # 2. Membaca Data Bersih secara Fleksibel (Mendukung Otomatisasi GitHub Actions)
