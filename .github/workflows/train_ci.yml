@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'MLProject_Folder/**'
-      - 'preprocessing/diabetes_preprocessing/data_clean.csv'
 
 jobs:
   mlflow-retraining:
