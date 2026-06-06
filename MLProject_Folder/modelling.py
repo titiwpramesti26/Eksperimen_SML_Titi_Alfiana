@@ -10,21 +10,24 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+import os
+import mlflow
+
 # 1. Inisialisasi Koneksi DagsHub & MLflow Online
 USERNAME = "titiwpramesti26"
 REPO_NAME = "Eksperimen_SML_Titi_Alfiana"
 
-# Mengambil token rahasia dari sistem (Environment Variable)
+# Mengambil token rahasia dari GitHub Actions
 token = os.environ.get("DAGSHUB_TOKEN")
 
 if token:
-    # Jika token ditemukan (saat dijalankan oleh Robot GitHub Actions), kunci otomatis dibuka
-    dagshub.init(repo_owner=USERNAME, repo_name=REPO_NAME, mlflow=True)
+    os.environ["MLFLOW_TRACKING_USERNAME"] = USERNAME
+    os.environ["MLFLOW_TRACKING_PASSWORD"] = token
     mlflow.set_tracking_uri(f"https://dagshub.com/{USERNAME}/{REPO_NAME}.mlflow")
-    print("✓ Berhasil terhubung ke DagsHub Online menggunakan token sistem.")
+    print("✓ Berhasil terhubung ke DagsHub Online lewat jalur bypass.")
 else:
-    # Jika token tidak ada (saat Titi uji coba lokal di laptop), beralih ke local tracking agar tidak error
-    mlflow.set_tracking_uri("http://localhost:5000") # atau biarkan kosong untuk local directory
+    # Jika dijalankan di laptop tanpa token, gunakan lokal
+    mlflow.set_tracking_uri("http://localhost:5000")
     print("⚠ DAGSHUB_TOKEN tidak terdeteksi, merekam eksperimen di MLflow Lokal.")
 
 mlflow.set_experiment("Eksperimen_Diabetes_Titi")
