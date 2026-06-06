@@ -24,7 +24,7 @@ if token:
     os.environ["MLFLOW_TRACKING_USERNAME"] = USERNAME
     os.environ["MLFLOW_TRACKING_PASSWORD"] = token
     mlflow.set_tracking_uri(f"https://dagshub.com/{USERNAME}/{REPO_NAME}.mlflow")
-    print("✓ Berhasil terhubung ke DagsHub Online lewat jalur bypass.")
+    print("✓ Berhasil terhubung ke DagsHub Online.")
 else:
     # Jika dijalankan di laptop tanpa token, gunakan lokal
     mlflow.set_tracking_uri("http://localhost:5000")
@@ -48,6 +48,11 @@ y = df['Outcome']
 
 # 4. Train-Test Split (80:20)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+
+# Hapus ID eksperimen lokal bawaan GitHub Actions agar DagsHub membuat ID baru
+if "MLFLOW_RUN_ID" in os.environ:
+    del os.environ["MLFLOW_RUN_ID"]
+# ----------------------------------------
 
 # 5. Menjalankan Otomatisasi Pelatihan Ulang (Re-training)
 with mlflow.start_run(run_name="Automated_CI_Retraining"):
